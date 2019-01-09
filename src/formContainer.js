@@ -34,7 +34,6 @@ const payloadBoxStyle = {
   float: "right",
   height: "685px",
   boxSizing: "border-box",
-
 };
 
 const noteStyle = {
@@ -137,17 +136,13 @@ class FormContainer extends Component {
     e.preventDefault();
     let userData = window.textPayload;
     alert(userData);
-    fetch("https://example.com", {
+    fetch("https://aax-console.amazon.com/api/dfp-job-api.php", {
       method: "POST",
-      body: userData,
+      body: JSON.stringify(userData),
+      mode: "no-cors",
       headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json"
+        Accept: "application/json"
       }
-    }).then(response => {
-      response.json().then(data => {
-        console.log("Successful" + data);
-      });
     });
   }
 
@@ -387,7 +382,7 @@ class FormContainer extends Component {
         <div style={printTopBoxStyle}>
         <h2>Response:</h2>
           <div style={printBotBoxStyle}>
-
+            {textPayload}
           </div>
         </div>
       </div>
