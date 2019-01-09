@@ -1,8 +1,13 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 
 const mainDiv = {
-  display: "flex",
-  padding: "10px"
+  display: "block",
+  padding: "10px",
+  width: "1050px",
+  border: "1px solid black",
+  fontFamily: "Veranda",
+  margin: "0 auto",
+  marginTop: "50px",
 };
 
 const buttonStyle = {
@@ -12,6 +17,10 @@ const buttonStyle = {
 const formStyle = {
   border: "1px solid black",
   padding: "15px",
+  float: "left",
+  height: "685px",
+  boxSizing: "border-box",
+  marginBottom: "15px"
 };
 
 const inputStyle = {
@@ -20,13 +29,35 @@ const inputStyle = {
 
 const payloadBoxStyle = {
   border: "1px solid black",
-  padding: "10px",
-  marginLeft: "10px"
+  padding: "15px",
+  marginLeft: "10px",
+  float: "right",
+  height: "685px",
+  boxSizing: "border-box",
+
 };
 
 const noteStyle = {
   marginLeft: "5px",
-  marginTop: "-15px"
+  marginTop: "-10px"
+};
+
+const printTopBoxStyle = {
+  clear: "both",
+  border: "1px solid black",
+  padding: "15px",
+  boxSizing: "border-box",
+  marginTop: "15px",
+  width: "1050px",
+};
+
+const printBotBoxStyle = {
+  padding: "15px",
+  boxSizing: "border-box",
+  margin: "0 auto",
+  width: "100%",
+  backgroundColor: "black",
+  color: "lightgreen"
 };
 
 const Button = props => {
@@ -104,11 +135,11 @@ class FormContainer extends Component {
 
   handleFormSubmit(e) {
     e.preventDefault();
-    let userData = this.state.formInfo;
-
-    fetch("http://example.com", {
+    let userData = window.textPayload;
+    alert(userData);
+    fetch("https://example.com", {
       method: "POST",
-      body: JSON.stringify(userData),
+      body: userData,
       headers: {
         Accept: "application/json",
         "Content-Type": "application/json"
@@ -183,9 +214,9 @@ class FormContainer extends Component {
 
  const textPayload = JSON.stringify(startPayload, undefined, 4);
  const guaranteeText = JSON.stringify(guaranteeInfo, undefined, 4);
+ window.textPayload = textPayload;
 
- console.log(textPayload);
- 
+
     return (
       <div style={mainDiv}>
         <form className="mainForm" onSubmit={this.handleFormSubmit} style={formStyle}>
@@ -279,7 +310,7 @@ class FormContainer extends Component {
             handleChange={this.handleInput}
             style={inputStyle}
           />
-
+          <hr></hr>
           <h3>Extra Inputs for Guaranteed</h3>
           <h5 style={noteStyle} >*Leave Blank if pushing Open Auction*</h5>
 
@@ -339,16 +370,25 @@ class FormContainer extends Component {
         </form>
 
         <div style={payloadBoxStyle}>
+          <h3>Standard Payload:</h3>
           <pre>
             <code>
-              <h2>Standard Payload</h2>
               {textPayload}
-              <hr/>
-              <h2>Extra Payload for Guaranteed Lines</h2>
+            </code>
+          </pre>
+          <hr/>
+          <h3>Extra Payload for Guaranteed Lines:</h3>
+          <pre>
+            <code>
               {guaranteeText}
             </code>
           </pre>
+        </div>
+        <div style={printTopBoxStyle}>
+        <h2>Response:</h2>
+          <div style={printBotBoxStyle}>
 
+          </div>
         </div>
       </div>
     );
